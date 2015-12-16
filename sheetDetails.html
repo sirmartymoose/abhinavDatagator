@@ -1,0 +1,214 @@
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <!-- HOT -->
+    <script src="http://docs.handsontable.com/0.16.0/bower_components/handsontable/dist/handsontable.full.js"></script>
+    <link type="text/css" rel="stylesheet"
+          href="http://docs.handsontable.com/0.16.0/bower_components/handsontable/dist/handsontable.full.min.css">
+
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+
+    <title>My Sheet</title>
+    <script>
+
+        $(document).ready(function () {
+            var $container = $("#hotTable");
+            $container.handsontable({
+                data: workingData,
+                rowHeaders: false,
+                colHeaders: ["First Name", "Last Name", "Email", "Avg Income", "Years Worked", "Satisfaction", "Salary"],
+                contextMenu: false,
+                stretchH: 'all'
+            });
+            hotInstance = $("#hotTable").handsontable('getInstance');
+            hotInstance.updateSettings(
+                    {
+                        /*
+                         beforeKeyDown: function(e){
+                         selection = hotInstance.getSelected()
+                         console.log(selection)
+                         },
+                         */
+                        afterSelectionEnd: function(e){
+                            selection = hotInstance.getSelected()
+                            runColumnCalculations(selection)
+                        }
+                    }
+            )
+
+
+
+            $("#chart").highcharts({
+                title: {
+                    text: ''
+                },
+                subtitle: {
+                    text: ''
+                },
+                xAxis: {
+
+                },
+                yAxis: {
+                    title: {
+                        text: ''
+                    }
+                },
+                tooltip: {
+                    valueSuffix: '°C'
+                },
+                legend: {
+
+                },
+                series: [{
+                    name: '',
+                    data: [],
+                    showInLegend: false
+                }]
+            });
+            mainChart = $("#chart").highcharts()
+            var chart = $('#chart').highcharts()
+
+
+        })
+    </script>
+    <script src="js/config.js"></script>
+    <script src="js/atomic.js"></script>
+    <script src="js/sheetDetails.js"></script>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">DataGator</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="listSheets.html">Your Sheets</a></li>
+                <li><a href="newSheet.html">Add Sheet</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<div class='container-fluid'>
+    <div class='row' id="titleBar">
+        <div class="col-md-1"></div>
+        <div class="col-md-9">
+            <div>
+                <h2 id="sheetTitle">Q4SalesData.xls</h2>
+            </div>
+        </div>
+        <div class="col-md-1">
+            <div>
+                <button class="button btn btn-default alignElementRight" id="saveVersionButton">Save
+                </button>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10" id="chartContainer">
+            <div class="row" id="chartHeaderDiv">
+                <div class="col-md-12" id="chartTitleBar">
+                    <div class="row">
+                        <div class="col-md-4" id="chartLabel">Data Analytics: Chart View</div>
+                        <div class="col-md-1"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="chartContent">
+                <div class="row">
+                    <div class="col-md-12 element">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="container" id="topContainer">
+
+                                   <div class="col-md-4">
+                                       <table class="table table-condensed table-bordered "
+                                              id="analyticTable">
+                                           <thead>
+                                           <th>Metric</th>
+                                           <th>Value</th>
+                                           </thead>
+                                           <tr class="">
+                                               <td>Average</td>
+                                               <td id="avgValue"></td>
+                                           </tr>
+                                           <tr class="">
+                                               <td>Mode</td>
+                                               <td id="modeValue"></td>
+                                           </tr>
+                                           <tr class="">
+                                               <td>Median</td>
+                                               <td id="medianValue"></td>
+                                           </tr>
+                                           <tr class="">
+                                               <td>Standard Dev</td>
+                                               <td id="stdevValue"></td>
+                                           </tr>
+                                           <tr>
+                                               <td>Variance</td>
+                                               <td id="varianceValue"></td>
+                                           </tr>
+                                       </table>
+                                   </div>
+                                   <div class="col-md-4">
+
+
+                                    </div>
+                                    <div class="col-md-4">
+
+                                        <!-- <div id="chart"></div>-->
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 element"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 element"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    <div class="row spacer"></div>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10" id="dataContainer">
+            <div class="row">
+                <div class="col-md-12"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="hotTable"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+</div>
+</body>

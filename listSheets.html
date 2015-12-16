@@ -1,0 +1,63 @@
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <!-- JS Helpers for ListSheets -->
+    <script src="js/listSheets.js"></script>
+    <title>DataGator - View Your Sheets</title>
+
+    <script>
+        $(document).ready(function(){
+            listSheets(sampleStubs)
+        })
+    </script>
+
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">DataGator</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="listSheets.html">Your Sheets</a></li>
+                <li><a href="newSheet.html">Add Sheet</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div class='container-fluid'>
+    <div class='bg'>
+        <div class='row'>
+            <div class='col-md-3' id='leftRail'></div>
+            <div class='col-md-6'>
+                <div class='row'>
+                    <div class="page-header">
+                        <h1>Your sheets</h1>
+
+                    </div>
+                </div>
+                <div class='row' id="sheetResults">
+                </div>
+                <div class='col-md-3' id='rightRail'></div>
+            </div>
+        </div>
+    </div>
+</body>
